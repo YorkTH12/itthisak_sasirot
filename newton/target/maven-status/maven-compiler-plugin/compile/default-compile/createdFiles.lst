@@ -1,0 +1,9 @@
+com\itthisak\newton\newton\NewtonApplication.class
+com\itthisak\newton\newton\model\Event.class
+com\itthisak\newton\newton\controller\EventController.class
+com\itthisak\newton\newton\model\Camera.class
+com\itthisak\newton\newton\service\CameraService.class
+com\itthisak\newton\newton\service\EventService.class
+com\itthisak\newton\newton\controller\CameraController.class
+com\itthisak\newton\newton\repository\CameraRepository.class
+com\itthisak\newton\newton\repository\EventRepository.class

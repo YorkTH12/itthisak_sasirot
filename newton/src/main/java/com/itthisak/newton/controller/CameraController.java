@@ -15,38 +15,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itthisak.newton.model.Camera;
 import com.itthisak.newton.repository.CameraRepository;
-import com.itthisak.newton.service.CameraService;
 
 @RestController
 @RequestMapping("/camera")
 public class CameraController {
     @Autowired
     private CameraRepository cameraRepository;
-    @Autowired
-    private CameraService cameraService;
 
     @GetMapping("")
-    public Iterable<Camera> getAll() {
+    public Iterable<Camera> getAll(){
         return cameraRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCameraById(@PathVariable int id) {
-        return cameraService.getCameraById(id);
+    public Optional<Camera>GetById(@PathVariable int id){
+        return cameraRepository.findById(id);
     }
 
-    @GetMapping("/ip/{ipAddress}")
-    public List<Camera> getByIpAddress(@PathVariable String ipAddress) {
-        return cameraRepository.findByIpAddress(ipAddress);
+    @GetMapping("/ip/{ipaddress}")
+    public List<Camera> getByIpAddress(@PathVariable String ipaddress){
+        return cameraRepository.findByIpaddress(ipaddress);
     }
+
 
     @GetMapping("/location/{location}")
-    public List<Camera> getByLoacation(@PathVariable String location) {
-        return cameraRepository.findByLocation(location);
+    public List<Camera> getByLoacation(@PathVariable String location){
+        return cameraRepository.findByLocationContaining(location);
     }
 
+
     @PostMapping("")
-    public ResponseEntity<Camera> create(@RequestBody Camera camera) {
+    public ResponseEntity<Camera> create(@RequestBody Camera camera){
         Camera newCamera = cameraRepository.save(camera);
         return ResponseEntity.status(HttpStatus.CREATED).body(newCamera);
     }

@@ -1,12 +1,13 @@
 package com.itthisak.newton.repository;
-import org.springframework.data.repository.CrudRepository;
-import com.itthisak.newton.model.Camera;
 
 import java.util.List;
 
-public interface CameraRepository extends CrudRepository<Camera, Integer> {
+import org.springframework.data.repository.CrudRepository;
 
-    List<Camera> findByIpAddress(String ipAddress);
+import com.itthisak.newton.model.Camera;
 
-    List<Camera> findByLocation(String location);
+public interface CameraRepository extends CrudRepository <Camera , Integer> {
+    
+    List<Camera> findByIpaddress(String ipaddress);
+    List<Camera> findByLocationContaining(String location);
 }

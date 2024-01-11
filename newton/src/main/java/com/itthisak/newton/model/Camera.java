@@ -1,5 +1,7 @@
 package com.itthisak.newton.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -12,29 +14,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 public class Camera {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
-
-    private String ipAddress;
-
-    private String location;
+    private String ipaddress;
     private String name;
+    private String location;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "camera")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "camera")
     private List<Event> events;
 
-    public Camera(String ipAddress, String name, String location) {
-        this.ipAddress = ipAddress;
-        this.name = name;
-        this.location = location;
-    }
+    
+
+    
 }
