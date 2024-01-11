@@ -1,14 +1,12 @@
 package com.itthisak.newton.model;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,19 +16,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Event {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-    private List<Camera> cameras;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private int camera_id,amount;
+    private int amount;
     private LocalDateTime created_at;
 
-    public Event(int camera_id, int amount){
-        this.camera_id =camera_id;
+    @ManyToOne
+    @JoinColumn(name = "camera_id")
+    private Camera camera;
+
+    public Event(int amount, Camera camera1) {
         this.amount = amount;
+        this.camera = camera;
         this.created_at = LocalDateTime.now();
     }
 }

@@ -1,5 +1,8 @@
 package com.itthisak.newton;
 
+import java.util.Arrays;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,47 +11,33 @@ import com.itthisak.newton.model.Event;
 import com.itthisak.newton.repository.CameraRepository;
 import com.itthisak.newton.repository.EventRepository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-
-
 @SpringBootApplication
-public class NewtonApplication implements CommandLineRunner{
-	private static final Logger logger = LoggerFactory.getLogger(NewtonApplication.class);
-	private final CameraRepository cameraRepository;
-	private final EventRepository eventRepository;
-	
-	public NewtonApplication(CameraRepository cameraRepository, EventRepository eventRepository){
-		this.cameraRepository = cameraRepository;
-		this.eventRepository = eventRepository;
-	}
+public class NewtonApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NewtonApplication.class, args);
 	}
 
-	@Override
-	public void run(String...args) throws Exception{
-		cameraRepository.save(new Camera("192.168.1.11", "Machine 1", "CAM-001"));
-		cameraRepository.save(new Camera("192.168.1.12", "Machine 2", "CAM-002"));
+	private final CameraRepository cameraRepository;
 
-		eventRepository.save(new Event(1, 200));
-		eventRepository.save(new Event(1, 300));
-		eventRepository.save(new Event(2, 200));
-		eventRepository.save(new Event(2, 300));
-		// for(Camera camera : cameraRepository.findAll()){
-		// 	logger.info("ip_address: {}, name: {}, location: {} ",
-		// 	camera.getIp_address(), camera.getName(), camera.getLocation()	
-		// 	);
-		// }
+	private final EventRepository eventRepository;
 
-		for(Camera camera : cameraRepository.findByIp("192.168.1.12")){
-			logger.info(camera.getIp_address(),"name: {}, location: {}");
-		}
+	public NewtonApplication(CameraRepository cameraRepository, EventRepository eventRepository) {
+		this.cameraRepository = cameraRepository;
+		this.eventRepository = eventRepository;
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+		Camera camera1 = new Camera("192.168.1.11", "Machine 1", "CAM-001");
+		Camera camera2 = new Camera("192.168.1.12", "Machine 2", "CAM-002");
+		cameraRepository.saveAll(Arrays.asList(camera1, camera2));
 
+		eventRepository.save(new Event(200,camera1));
+		eventRepository.save(new Event(300,camera1));
+		eventRepository.save(new Event(200,camera2));
+		eventRepository.save(new Event(300,camera2));
+
+	}
 }
-
 
